@@ -69,13 +69,19 @@ class TableAssignmentGame {
         
         // 엑셀 다운로드 버튼들
 
-        startBtn.addEventListener('click', () => this.startAssignment());
-        resetBtn.addEventListener('click', () => this.resetGame());
-        adminBtn.addEventListener('click', () => this.showAdminModal());
-        closeResultBtn.addEventListener('click', () => this.hideResultCard());
-        closeAdminBtn.addEventListener('click', () => this.hideAdminModal());
-        saveSettingsBtn.addEventListener('click', () => this.saveSettings());
-        cancelSettingsBtn.addEventListener('click', () => this.hideAdminModal());
+        // 요소가 존재하는지 확인하고 이벤트 리스너 추가
+        if (startBtn) startBtn.addEventListener('click', () => this.startAssignment());
+        if (resetBtn) resetBtn.addEventListener('click', () => this.resetGame());
+        if (adminBtn) {
+            adminBtn.addEventListener('click', () => {
+                console.log('관리자 버튼 클릭됨'); // 디버깅용
+                this.showAdminModal();
+            });
+        }
+        if (closeResultBtn) closeResultBtn.addEventListener('click', () => this.hideResultCard());
+        if (closeAdminBtn) closeAdminBtn.addEventListener('click', () => this.hideAdminModal());
+        if (saveSettingsBtn) saveSettingsBtn.addEventListener('click', () => this.saveSettings());
+        if (cancelSettingsBtn) cancelSettingsBtn.addEventListener('click', () => this.hideAdminModal());
         
         // 주차 관련 이벤트 (요소가 존재할 때만)
         this.bindDynamicEvents();
@@ -1234,8 +1240,25 @@ class TableAssignmentGame {
 
 // 페이지 로드 시 게임 초기화
 document.addEventListener('DOMContentLoaded', () => {
-    // 게임 인스턴스 생성
+    // 게임 인스턴스 생성 및 초기화
     window.tableGame = new TableAssignmentGame();
+    window.tableGame.init();
+    
+    // 관리자 버튼 추가 안전장치
+    setTimeout(() => {
+        const adminBtn = document.getElementById('adminBtn');
+        if (adminBtn) {
+            console.log('관리자 버튼 발견:', adminBtn);
+            // 기존 이벤트 리스너 제거 후 새로 추가
+            adminBtn.removeEventListener('click', window.tableGame.showAdminModal);
+            adminBtn.addEventListener('click', () => {
+                console.log('관리자 버튼 클릭됨!');
+                window.tableGame.showAdminModal();
+            });
+        } else {
+            console.error('관리자 버튼을 찾을 수 없습니다!');
+        }
+    }, 500);
     
     // 환영 메시지
     setTimeout(() => {

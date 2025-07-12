@@ -505,6 +505,9 @@ header {
     transition: all 0.3s ease;
     font-family: 'Noto Sans KR', sans-serif;
     box-shadow: 0 6px 20px rgba(107, 114, 128, 0.3);
+    position: relative;
+    z-index: 10;
+    pointer-events: all;
 }
 
 .admin-button:hover {
