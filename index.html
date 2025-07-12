@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K글로벌리더아카데미 테이블 배정 게임</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>KGLA 2025 홍익지도자 1학년 집중연구과정</h1>
+                <h2>오늘 나의 행운의 테이블 번호는?</h2>
+            </div>
+        </header>
+
+        <main>
+            <div class="game-area">
+                <!-- 중앙 컨트롤 영역 -->
+                <div class="control-area">
+                    <div class="student-input">
+                        <label for="studentName">연구원 이름:</label>
+                        <input type="text" id="studentName" placeholder="이름을 입력하세요">
+                    </div>
+                    
+                    <button id="startBtn" class="start-button">
+                        <span class="button-text">START</span>
+                        <div class="button-loader"></div>
+                    </button>
+                    
+                    <div class="status-info">
+                        <div class="total-students">총 배정된 연구원: <span id="totalStudents">0</span>명</div>
+                        <div class="available-seats">남은 자리: <span id="availableSeats">49</span>석</div>
+                    </div>
+                </div>
+
+                <!-- 테이블 영역 -->
+                <div class="tables-grid">
+                    <div class="table-item" data-table="1">
+                        <div class="table-number">1번 테이블</div>
+                        <div class="table-seats">
+                            <span class="current-seats">0</span> / <span class="max-seats">7</span>
+                        </div>
+                        <div class="table-visual">
+                            <div class="table-circle">
+                                <div class="seat seat-1"></div>
+                                <div class="seat seat-2"></div>
+                                <div class="seat seat-3"></div>
+                                <div class="seat seat-4"></div>
+                                <div class="seat seat-5"></div>
+                                <div class="seat seat-6"></div>
+                                <div class="seat seat-7"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-item" data-table="2">
+                        <div class="table-number">2번 테이블</div>
+                        <div class="table-seats">
+                            <span class="current-seats">0</span> / <span class="max-seats">7</span>
+                        </div>
+                        <div class="table-visual">
+                            <div class="table-circle">
+                                <div class="seat seat-1"></div>
+                                <div class="seat seat-2"></div>
+                                <div class="seat seat-3"></div>
+                                <div class="seat seat-4"></div>
+                                <div class="seat seat-5"></div>
+                                <div class="seat seat-6"></div>
+                                <div class="seat seat-7"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-item" data-table="3">
+                        <div class="table-number">3번 테이블</div>
+                        <div class="table-seats">
+                            <span class="current-seats">0</span> / <span class="max-seats">7</span>
+                        </div>
+                        <div class="table-visual">
+                            <div class="table-circle">
+                                <div class="seat seat-1"></div>
+                                <div class="seat seat-2"></div>
+                                <div class="seat seat-3"></div>
+                                <div class="seat seat-4"></div>
+                                <div class="seat seat-5"></div>
+                                <div class="seat seat-6"></div>
+                                <div class="seat seat-7"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-item" data-table="4">
+                        <div class="table-number">4번 테이블</div>
+                        <div class="table-seats">
+                            <span class="current-seats">0</span> / <span class="max-seats">7</span>
+                        </div>
+                        <div class="table-visual">
+                            <div class="table-circle">
+                                <div class="seat seat-1"></div>
+                                <div class="seat seat-2"></div>
+                                <div class="seat seat-3"></div>
+                                <div class="seat seat-4"></div>
+                                <div class="seat seat-5"></div>
+                                <div class="seat seat-6"></div>
+                                <div class="seat seat-7"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-item" data-table="5">
+                        <div class="table-number">5번 테이블</div>
+                        <div class="table-seats">
+                            <span class="current-seats">0</span> / <span class="max-seats">7</span>
+                        </div>
+                        <div class="table-visual">
+                            <div class="table-circle">
+                                <div class="seat seat-1"></div>
+                                <div class="seat seat-2"></div>
+                                <div class="seat seat-3"></div>
+                                <div class="seat seat-4"></div>
+                                <div class="seat seat-5"></div>
+                                <div class="seat seat-6"></div>
+                                <div class="seat seat-7"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-item" data-table="6">
+                        <div class="table-number">6번 테이블</div>
+                        <div class="table-seats">
+                            <span class="current-seats">0</span> / <span class="max-seats">7</span>
+                        </div>
+                        <div class="table-visual">
+                            <div class="table-circle">
+                                <div class="seat seat-1"></div>
+                                <div class="seat seat-2"></div>
+                                <div class="seat seat-3"></div>
+                                <div class="seat seat-4"></div>
+                                <div class="seat seat-5"></div>
+                                <div class="seat seat-6"></div>
+                                <div class="seat seat-7"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-item" data-table="7">
+                        <div class="table-number">7번 테이블</div>
+                        <div class="table-seats">
+                            <span class="current-seats">0</span> / <span class="max-seats">7</span>
+                        </div>
+                        <div class="table-visual">
+                            <div class="table-circle">
+                                <div class="seat seat-1"></div>
+                                <div class="seat seat-2"></div>
+                                <div class="seat seat-3"></div>
+                                <div class="seat seat-4"></div>
+                                <div class="seat seat-5"></div>
+                                <div class="seat seat-6"></div>
+                                <div class="seat seat-7"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 결과 표시 카드 -->
+                <div id="resultCard" class="result-card hidden">
+                    <div class="result-content">
+                        <div class="result-icon">🎉</div>
+                        <div class="result-student"></div>
+                        <div class="result-table"></div>
+                        <div class="result-message">축하합니다!</div>
+                        <div class="result-actions">
+                            <button class="parking-register-btn">🚗 주차 등록</button>
+                            <button class="close-result">확인</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 주차 정보 입력 모달 -->
+                <div id="parkingModal" class="parking-modal hidden">
+                    <div class="parking-content">
+                        <div class="parking-header">
+                            <h2>🚗 주차 정보 등록</h2>
+                            <button class="close-parking">×</button>
+                        </div>
+                        
+                        <div class="parking-body">
+                            <div class="parking-student-info">
+                                <div class="student-name">
+                                    <span class="parking-student-name"></span> 연구원
+                                </div>
+                                <div class="student-table">
+                                    <span class="parking-table-number"></span>번 테이블
+                                </div>
+                            </div>
+                            
+                            <div class="parking-input-group">
+                                <label for="carNumber">차량번호:</label>
+                                <input type="text" id="carNumber" placeholder="예: 12가1234" maxlength="20">
+                                <div class="input-hint">차량번호를 정확히 입력해주세요</div>
+                            </div>
+                        </div>
+                        
+                        <div class="parking-footer">
+                            <button id="saveParkingInfo" class="save-parking-btn">주차 정보 저장</button>
+                            <button id="cancelParking" class="cancel-parking-btn">취소</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 리셋 버튼 -->
+                <div class="reset-area">
+                    <button id="resetBtn" class="reset-button">전체 초기화</button>
+                    <button id="adminBtn" class="admin-button">관리자 설정</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- 관리자 페이지 모달 -->
+        <div id="adminModal" class="admin-modal hidden">
+            <div class="admin-content">
+                <div class="admin-header">
+                    <h2>관리자 설정</h2>
+                    <button class="close-admin">×</button>
+                </div>
+                
+                <div class="admin-body">
+                    <div class="admin-tabs">
+                        <button class="tab-button active" data-tab="basic">기본 설정</button>
+                        <button class="tab-button" data-tab="table">테이블 설정</button>
+                        <button class="tab-button" data-tab="students">연구원 관리</button>
+                        <button class="tab-button" data-tab="status">현황 확인</button>
+                        <button class="tab-button" data-tab="parking">주차 관리</button>
+                    </div>
+
+                    <!-- 기본 설정 탭 -->
+                    <div class="tab-content active" data-tab="basic">
+                        <div class="setting-group">
+                            <label for="tableCount">테이블 수:</label>
+                            <div class="input-group">
+                                <input type="number" id="tableCount" min="1" max="10" value="7">
+                                <span class="input-unit">개</span>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label for="defaultSeatsPerTable">기본 테이블당 인원수:</label>
+                            <div class="input-group">
+                                <input type="number" id="defaultSeatsPerTable" min="1" max="15" value="7">
+                                <span class="input-unit">명</span>
+                                <button id="applyToAllTables" class="apply-button">모든 테이블에 적용</button>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label>총 수용 인원:</label>
+                            <div class="total-capacity">
+                                <span id="totalCapacity">49</span>명
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 테이블 설정 탭 -->
+                    <div class="tab-content" data-tab="table">
+                        <div class="setting-group">
+                            <label>테이블별 개별 인원수 설정:</label>
+                            <div class="table-capacity-grid" id="tableCapacityGrid">
+                                <!-- 동적 생성 -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 연구원 관리 탭 -->
+                    <div class="tab-content" data-tab="students">
+                        <div class="setting-group">
+                            <label>연구원 명단 관리:</label>
+                            <div class="student-management">
+                                <textarea id="studentListText" rows="8" placeholder="연구원 이름을 한 줄에 하나씩 입력하세요"></textarea>
+                                <div class="student-count">
+                                    현재 등록된 연구원: <span id="studentCount">49</span>명
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 현황 확인 탭 -->
+                    <div class="tab-content" data-tab="status">
+                        <div class="status-controls">
+                            <div class="attendance-info">
+                                <div class="class-time-info">
+                                    <span class="time-label">수업시간:</span>
+                                    <span class="time-value">11:00 - 14:00</span>
+                                    <span class="current-time" id="currentTime"></span>
+                                </div>
+                                <button id="downloadStatusExcel" class="download-excel-btn">📊 출석현황 다운로드</button>
+                            </div>
+                        </div>
+
+                        <div class="setting-group">
+                            <label>출석 현황:</label>
+                            <div class="attendance-summary">
+                                <div class="attendance-stats">
+                                    <div class="stat-box on-time">
+                                        <span class="stat-number" id="onTimeCount">0</span>
+                                        <span class="stat-label">정시 출석</span>
+                                    </div>
+                                    <div class="stat-box late">
+                                        <span class="stat-number" id="lateCount">0</span>
+                                        <span class="stat-label">지각</span>
+                                    </div>
+                                    <div class="stat-box absent">
+                                        <span class="stat-number" id="absentCount">0</span>
+                                        <span class="stat-label">결석</span>
+                                    </div>
+                                    <div class="stat-box not-arrived">
+                                        <span class="stat-number" id="notArrivedCount">49</span>
+                                        <span class="stat-label">미도착</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="setting-group">
+                            <label>미도착자 명단:</label>
+                            <div class="absent-students">
+                                <div class="absent-list" id="absentList">
+                                    <!-- 동적 생성 -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label>테이블별 현황:</label>
+                            <div class="table-status" id="tableStatus">
+                                <!-- 동적 생성 -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 주차 관리 탭 -->
+                    <div class="tab-content" data-tab="parking">
+                        <div class="parking-controls">
+                            <div class="parking-search">
+                                <label for="parkingSearch">검색:</label>
+                                <input type="text" id="parkingSearch" placeholder="이름 또는 차량번호로 검색">
+                                <button id="clearParkingSearch" class="clear-search-btn">초기화</button>
+                                <button id="downloadParkingExcel" class="download-excel-btn">📋 주차등록부 다운로드</button>
+                            </div>
+                            
+                            <div class="parking-stats">
+                                <div class="stat-item">
+                                    <span class="stat-label">총 등록 차량:</span>
+                                    <span class="stat-value" id="totalParkingRegistered">0</span>대
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">등록 확인 완료:</span>
+                                    <span class="stat-value" id="totalParkingConfirmed">0</span>대
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">등록 대기:</span>
+                                    <span class="stat-value" id="totalParkingPending">0</span>대
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="setting-group">
+                            <label>주차 현황 목록:</label>
+                            <div class="parking-list" id="parkingList">
+                                <!-- 동적 생성 -->
+                            </div>
+                        </div>
+
+                        <div class="setting-group">
+                            <label>주차 미등록 연구원:</label>
+                            <div class="no-parking-list" id="noParkingList">
+                                <!-- 동적 생성 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="admin-footer">
+                    <button id="saveSettings" class="save-button">설정 저장</button>
+                    <button id="cancelSettings" class="cancel-button">취소</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 

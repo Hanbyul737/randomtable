@@ -1,0 +1,1636 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: linear-gradient(135deg, #ff6ec7 0%, #a855f7 50%, #3b82f6 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    width: 100%;
+}
+
+/* Header */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.header-content h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.header-content h2 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Main Game Area */
+.game-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Tables Grid */
+.tables-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+    margin: 40px auto 30px auto;
+    max-height: 35vh;
+    overflow-y: auto;
+}
+
+.table-item {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.table-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.table-item.highlight {
+    animation: tableHighlight 2s ease-in-out;
+    border: 3px solid #ff6ec7;
+}
+
+@keyframes tableHighlight {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.table-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.table-seats {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.current-seats {
+    color: #a855f7;
+    font-weight: 700;
+}
+
+.max-seats {
+    color: #333;
+    font-weight: 600;
+}
+
+/* Table Visual */
+.table-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.table-circle {
+    width: 120px;
+    height: 120px;
+    border: 4px solid #ddd;
+    border-radius: 50%;
+    position: relative;
+    background: #f8f9fa;
+}
+
+.seat {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #e9ecef;
+    border: 2px solid #ddd;
+    position: absolute;
+    transition: all 0.3s ease;
+}
+
+.seat.occupied {
+    background: #a855f7;
+    border-color: #9333ea;
+    animation: seatFill 0.5s ease-out;
+}
+
+@keyframes seatFill {
+    0% { transform: scale(0) rotate(0deg); }
+    50% { transform: scale(1.2) rotate(180deg); }
+    100% { transform: scale(1) rotate(360deg); }
+}
+
+/* 기본 좌석 위치 (7인용 테이블) */
+.seat-1 { top: -10px; left: 50%; transform: translateX(-50%); }
+.seat-2 { top: 15px; right: -10px; }
+.seat-3 { bottom: 15px; right: -10px; }
+.seat-4 { bottom: -10px; left: 50%; transform: translateX(-50%); }
+.seat-5 { bottom: 15px; left: -10px; }
+.seat-6 { top: 15px; left: -10px; }
+.seat-7 { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+
+/* 추가 좌석 위치 (15인 까지 지원) */
+.seat-8 { top: 5px; right: 10px; }
+.seat-9 { top: 35px; right: 5px; }
+.seat-10 { bottom: 5px; right: 10px; }
+.seat-11 { bottom: 5px; left: 10px; }
+.seat-12 { top: 35px; left: 5px; }
+.seat-13 { top: 5px; left: 10px; }
+.seat-14 { top: 25px; left: 30%; }
+.seat-15 { top: 25px; right: 30%; }
+
+/* Control Area */
+.control-area {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 25px;
+    padding: 50px 40px;
+    text-align: center;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(15px);
+    margin: 40px auto;
+    max-width: 600px;
+    border: 3px solid rgba(255, 110, 199, 0.2);
+}
+
+.student-input {
+    margin-bottom: 40px;
+}
+
+.student-input label {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.student-input input {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px 25px;
+    font-size: 1.3rem;
+    border: 3px solid #ddd;
+    border-radius: 20px;
+    outline: none;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 600;
+    text-align: center;
+}
+
+.student-input input:focus {
+    border-color: #a855f7;
+    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2);
+}
+
+/* Autocomplete Styles */
+.student-input {
+    position: relative;
+}
+
+.autocomplete-container {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 300px;
+    background: white;
+    border: 2px solid #a855f7;
+    border-top: none;
+    border-radius: 0 0 15px 15px;
+    box-shadow: 0 8px 25px rgba(168, 85, 247, 0.2);
+    z-index: 1000;
+    display: none;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.autocomplete-item {
+    padding: 12px 20px;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s ease;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.autocomplete-item:hover {
+    background: linear-gradient(135deg, rgba(255, 110, 199, 0.1), rgba(168, 85, 247, 0.1));
+    color: #a855f7;
+}
+
+.autocomplete-item:last-child {
+    border-bottom: none;
+    border-radius: 0 0 13px 13px;
+}
+
+/* Start Button */
+.start-button {
+    background: linear-gradient(135deg, #ff6ec7, #a855f7);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 35px 80px;
+    font-size: 2.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    min-width: 350px;
+    box-shadow: 0 15px 40px rgba(255, 110, 199, 0.6);
+    font-family: 'Noto Sans KR', sans-serif;
+    margin: 30px 0;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.start-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(255, 110, 199, 0.5);
+}
+
+.start-button:active {
+    transform: translateY(0);
+}
+
+.start-button.loading {
+    pointer-events: none;
+}
+
+.start-button.loading .button-text {
+    opacity: 0;
+}
+
+.start-button.loading .button-loader {
+    opacity: 1;
+}
+
+.button-loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Status Info */
+.status-info {
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.status-info > div {
+    background: rgba(168, 85, 247, 0.1);
+    padding: 10px 20px;
+    border-radius: 15px;
+    font-weight: 600;
+    color: #333;
+}
+
+.status-info span {
+    color: #a855f7;
+    font-weight: 700;
+}
+
+/* Result Card */
+.result-card {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+}
+
+.result-card.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.8);
+}
+
+.result-card.show {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+    animation: resultCardShow 0.5s ease-out;
+}
+
+@keyframes resultCardShow {
+    0% {
+        opacity: 0;
+        transform: scale(0.5) rotate(-10deg);
+    }
+    50% {
+        transform: scale(1.1) rotate(5deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+.result-content {
+    background: white;
+    border-radius: 25px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 90%;
+    width: 400px;
+    position: relative;
+    overflow: hidden;
+}
+
+.result-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #ff6ec7, #a855f7, #ff6ec7);
+    animation: shimmer 2s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: -100% 0; }
+    100% { background-position: 100% 0; }
+}
+
+.result-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    animation: bounce 1s ease-in-out infinite alternate;
+}
+
+@keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+}
+
+.result-student {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.result-table {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #a855f7;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.result-message {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.close-result {
+    background: linear-gradient(135deg, #ff6ec7, #a855f7);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.close-result:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 110, 199, 0.4);
+}
+
+/* Reset Button */
+.reset-area {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.reset-button {
+    background: linear-gradient(135deg, #f44336, #d32f2f);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 15px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans KR', sans-serif;
+    box-shadow: 0 6px 20px rgba(244, 67, 54, 0.3);
+}
+
+.reset-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(244, 67, 54, 0.4);
+}
+
+.admin-button {
+    background: linear-gradient(135deg, #6b7280, #4b5563);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 15px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans KR', sans-serif;
+    box-shadow: 0 6px 20px rgba(107, 114, 128, 0.3);
+}
+
+.admin-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(107, 114, 128, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .header-content h1 {
+        font-size: 1.5rem;
+    }
+    
+    .header-content h2 {
+        font-size: 1.2rem;
+    }
+    
+    .tables-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 10px;
+        max-height: 30vh;
+    }
+    
+    .table-item {
+        padding: 12px;
+    }
+    
+    .table-circle {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .control-area {
+        padding: 40px 25px;
+        margin: 20px auto;
+    }
+    
+    .student-input label {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+    
+    .student-input input {
+        max-width: 100%;
+        padding: 18px 20px;
+        font-size: 1.1rem;
+    }
+    
+    .start-button {
+        padding: 30px 50px;
+        font-size: 1.8rem;
+        min-width: 280px;
+        letter-spacing: 2px;
+    }
+    
+    .result-content {
+        padding: 30px 25px;
+        width: 350px;
+    }
+    
+    .result-icon {
+        font-size: 3rem;
+    }
+    
+    .result-student {
+        font-size: 1.5rem;
+    }
+    
+    .result-table {
+        font-size: 2rem;
+    }
+    
+    .parking-date-info {
+        flex-direction: column;
+        gap: 5px;
+        text-align: center;
+    }
+    
+    .download-excel-btn {
+        font-size: 0.8rem;
+        padding: 10px 15px;
+        margin: 5px 0;
+    }
+    
+    .attendance-info {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .attendance-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    
+    .stat-box {
+        padding: 15px 10px;
+    }
+    
+    .stat-number {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .tables-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .status-info {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .result-content {
+        width: 90%;
+        max-width: 300px;
+    }
+}
+
+/* Loading Animation for Tables */
+.table-item.loading {
+    animation: tableLoading 1.5s ease-in-out infinite;
+}
+
+@keyframes tableLoading {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* Pulse effect for available tables */
+.table-item.available {
+    animation: availablePulse 2s ease-in-out infinite;
+}
+
+@keyframes availablePulse {
+    0%, 100% { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); }
+    50% { box-shadow: 0 8px 32px rgba(255, 110, 199, 0.4); }
+}
+
+/* Admin Modal */
+.admin-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+}
+
+.admin-modal.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.8);
+}
+
+.admin-modal.show {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+}
+
+.admin-content {
+    background: white;
+    border-radius: 25px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 30px;
+    border-bottom: 2px solid #f0f0f0;
+    background: linear-gradient(135deg, rgba(255, 110, 199, 0.1), rgba(168, 85, 247, 0.1));
+    border-radius: 25px 25px 0 0;
+}
+
+.admin-header h2 {
+    margin: 0;
+    color: #333;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.close-admin {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #666;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.close-admin:hover {
+    background: rgba(255, 110, 199, 0.1);
+    color: #a855f7;
+}
+
+.admin-body {
+    padding: 30px;
+}
+
+.setting-group {
+    margin-bottom: 25px;
+}
+
+.setting-group label {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.input-group input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.input-group input:focus {
+    border-color: #a855f7;
+    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
+}
+
+.input-unit {
+    font-weight: 600;
+    color: #666;
+    min-width: 30px;
+}
+
+.total-capacity {
+    background: rgba(168, 85, 247, 0.1);
+    padding: 12px 15px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #a855f7;
+    text-align: center;
+}
+
+.student-management textarea {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: 'Noto Sans KR', sans-serif;
+    resize: vertical;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.student-management textarea:focus {
+    border-color: #a855f7;
+    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
+}
+
+.student-count {
+    margin-top: 10px;
+    font-weight: 600;
+    color: #666;
+    text-align: center;
+}
+
+.student-count span {
+    color: #a855f7;
+    font-weight: 700;
+}
+
+.admin-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    padding: 25px 30px;
+    border-top: 2px solid #f0f0f0;
+    background: #f8f9fa;
+    border-radius: 0 0 25px 25px;
+}
+
+.save-button {
+    background: linear-gradient(135deg, #ff6ec7, #a855f7);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.save-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(255, 110, 199, 0.3);
+}
+
+.cancel-button {
+    background: #f1f5f9;
+    color: #64748b;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.cancel-button:hover {
+    background: #e2e8f0;
+    transform: translateY(-1px);
+}
+
+/* Admin Tabs */
+.admin-tabs {
+    display: flex;
+    border-bottom: 2px solid #f0f0f0;
+    margin-bottom: 25px;
+    gap: 5px;
+}
+
+.tab-button {
+    flex: 1;
+    padding: 12px 20px;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+    border-radius: 10px 10px 0 0;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.tab-button.active {
+    background: linear-gradient(135deg, rgba(255, 110, 199, 0.1), rgba(168, 85, 247, 0.1));
+    color: #a855f7;
+    border-bottom: 3px solid #a855f7;
+}
+
+.tab-button:hover:not(.active) {
+    background: rgba(168, 85, 247, 0.05);
+    color: #a855f7;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Table Capacity Grid */
+.table-capacity-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.table-capacity-item {
+    background: #f8f9fa;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.table-capacity-item:hover {
+    border-color: #a855f7;
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.1);
+}
+
+.table-capacity-item label {
+    display: block;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+.table-capacity-item input {
+    width: 70px;
+    padding: 8px 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.table-capacity-item input:focus {
+    border-color: #a855f7;
+    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
+}
+
+.apply-button {
+    background: linear-gradient(135deg, #a855f7, #9333ea);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.apply-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+}
+
+/* Absent Students */
+.absent-students {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    border: 2px solid #e2e8f0;
+}
+
+.absent-list {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 8px;
+}
+
+.absent-item {
+    background: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #f44336;
+    color: #f44336;
+    font-weight: 600;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.absent-summary {
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    color: #333;
+    border: 2px solid #e2e8f0;
+}
+
+.absent-summary span {
+    color: #a855f7;
+    font-weight: 700;
+}
+
+/* Table Status */
+.table-status {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.table-status-item {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+}
+
+.table-status-item.full {
+    border-color: #f44336;
+    background: rgba(244, 67, 54, 0.05);
+}
+
+.table-status-item.partial {
+    border-color: #ff9800;
+    background: rgba(255, 152, 0, 0.05);
+}
+
+.table-status-item.empty {
+    border-color: #4caf50;
+    background: rgba(76, 175, 80, 0.05);
+}
+
+.table-status-item h4 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.table-status-item .capacity {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.table-status-item.full .capacity {
+    color: #f44336;
+}
+
+.table-status-item.partial .capacity {
+    color: #ff9800;
+}
+
+.table-status-item.empty .capacity {
+    color: #4caf50;
+}
+
+.table-status-item .students {
+    font-size: 0.9rem;
+    color: #666;
+    max-height: 60px;
+    overflow-y: auto;
+}
+
+/* Result Actions */
+.result-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.parking-register-btn {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 15px 25px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.parking-register-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
+}
+
+/* Parking Modal */
+.parking-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2500;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+}
+
+.parking-modal.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.8);
+}
+
+.parking-modal.show {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+}
+
+.parking-content {
+    background: white;
+    border-radius: 25px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.parking-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 30px;
+    border-bottom: 2px solid #f0f0f0;
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(22, 163, 74, 0.1));
+    border-radius: 25px 25px 0 0;
+}
+
+.parking-header h2 {
+    margin: 0;
+    color: #333;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.close-parking {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #666;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.close-parking:hover {
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+}
+
+.parking-body {
+    padding: 30px;
+}
+
+.parking-student-info {
+    background: rgba(34, 197, 94, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    border: 2px solid rgba(34, 197, 94, 0.2);
+}
+
+.parking-student-info .student-name {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.parking-student-info .student-table {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #22c55e;
+}
+
+.parking-input-group {
+    margin-bottom: 20px;
+}
+
+.parking-input-group label {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.parking-input-group input {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid #ddd;
+    border-radius: 15px;
+    font-size: 1.1rem;
+    outline: none;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans KR', sans-serif;
+    text-align: center;
+    font-weight: 600;
+}
+
+.parking-input-group input:focus {
+    border-color: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+}
+
+.input-hint {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    color: #666;
+    text-align: center;
+}
+
+.parking-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    padding: 25px 30px;
+    border-top: 2px solid #f0f0f0;
+    background: #f8f9fa;
+    border-radius: 0 0 25px 25px;
+}
+
+.save-parking-btn {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.save-parking-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(34, 197, 94, 0.3);
+}
+
+.cancel-parking-btn {
+    background: #f1f5f9;
+    color: #64748b;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.cancel-parking-btn:hover {
+    background: #e2e8f0;
+    transform: translateY(-1px);
+}
+
+/* Parking Management */
+.parking-controls {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 25px;
+    border: 2px solid #e2e8f0;
+}
+
+.parking-search {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.parking-search label {
+    font-weight: 600;
+    color: #333;
+    min-width: 50px;
+}
+
+.parking-search input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.parking-search input:focus {
+    border-color: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+}
+
+.clear-search-btn {
+    background: #64748b;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.clear-search-btn:hover {
+    background: #475569;
+    transform: translateY(-1px);
+}
+
+.parking-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.stat-item {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    border: 2px solid #e2e8f0;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #22c55e;
+}
+
+.parking-list {
+    max-height: 400px;
+    overflow-y: auto;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border: 2px solid #e2e8f0;
+}
+
+.parking-item {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    border: 2px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.parking-item:hover {
+    border-color: #22c55e;
+    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.1);
+}
+
+.parking-item.confirmed {
+    border-color: #22c55e;
+    background: rgba(34, 197, 94, 0.05);
+}
+
+.parking-item.pending {
+    border-color: #f59e0b;
+    background: rgba(245, 158, 11, 0.05);
+}
+
+.parking-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.parking-student-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.parking-table-info {
+    font-weight: 600;
+    color: #666;
+}
+
+.parking-car-number {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #22c55e;
+    margin-bottom: 15px;
+    text-align: center;
+    padding: 10px;
+    background: rgba(34, 197, 94, 0.1);
+    border-radius: 8px;
+}
+
+.parking-date-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: rgba(168, 85, 247, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(168, 85, 247, 0.1);
+}
+
+.parking-date, .parking-time {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 600;
+}
+
+.parking-date {
+    color: #a855f7;
+}
+
+.parking-time {
+    color: #64748b;
+}
+
+.parking-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.parking-timestamp {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.registration-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.registration-check input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.registration-check label {
+    font-weight: 600;
+    cursor: pointer;
+    color: #333;
+}
+
+.no-parking-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    border: 2px solid #e2e8f0;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.no-parking-item {
+    background: white;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    border: 2px solid #f59e0b;
+    color: #f59e0b;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* Download Excel Button */
+.download-excel-btn {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans KR', sans-serif;
+    margin-left: 10px;
+}
+
+.download-excel-btn:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+}
+
+/* Status Controls */
+.status-controls {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 25px;
+    border: 2px solid #e2e8f0;
+}
+
+.attendance-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.class-time-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.time-label {
+    font-weight: 600;
+    color: #333;
+}
+
+.time-value {
+    font-weight: 700;
+    color: #a855f7;
+    font-size: 1.1rem;
+}
+
+.current-time {
+    font-weight: 600;
+    color: #22c55e;
+    font-size: 1rem;
+    padding: 8px 15px;
+    background: rgba(34, 197, 94, 0.1);
+    border-radius: 8px;
+}
+
+/* Attendance Summary */
+.attendance-summary {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 20px;
+    border: 2px solid #e2e8f0;
+}
+
+.attendance-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.stat-box {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    border: 3px solid;
+    transition: all 0.3s ease;
+}
+
+.stat-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.stat-box.on-time {
+    border-color: #22c55e;
+    background: rgba(34, 197, 94, 0.05);
+}
+
+.stat-box.late {
+    border-color: #f59e0b;
+    background: rgba(245, 158, 11, 0.05);
+}
+
+.stat-box.absent {
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, 0.05);
+}
+
+.stat-box.not-arrived {
+    border-color: #64748b;
+    background: rgba(100, 116, 139, 0.05);
+}
+
+.stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.stat-box.on-time .stat-number {
+    color: #22c55e;
+}
+
+.stat-box.late .stat-number {
+    color: #f59e0b;
+}
+
+.stat-box.absent .stat-number {
+    color: #ef4444;
+}
+
+.stat-box.not-arrived .stat-number {
+    color: #64748b;
+}
+
+.stat-label {
+    font-weight: 600;
+    color: #333;
+    font-size: 0.9rem;
+} 
